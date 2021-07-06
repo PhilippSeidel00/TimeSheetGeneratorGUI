@@ -1,18 +1,8 @@
-# TimeSheetGenerator
+# TimeSheetGeneratorGUI
 
-TimeSheetGenerator is an application that checks and builds time sheet documents.
+TimeSheetGenerator is an application that checks and builds time sheet documents.<br> 
+With this project I hope to increase usability by providing a suitable GUI as well as by adding some handy features.
 
-## Execution
+## Project State
+This project is actively worked on and has not yet reched a usable state.
 
-Run TimeSheetGenerator (requires Java 8 or higher):
-
-`$ java -jar TimeSheetGenerator.jar [--help] [--version] [--gui] [--file <global.json> <month.json> <output.tex>]`
-
-### Command Line Options
-
-| Option | Long Option | Arguments                               | Description                                                    |
-| ------ | ----------- | --------------------------------------- | -------------------------------------------------------------- |
-|  `-h`  |  `--help`   | _none_                                  | Print a help dialog.                                           |
-|  `-v`  | `--version` | _none_                                  | Print the version of the application.                          |
-|  `-g`  |   `--gui`   | _none_                                  | Generate an output file based on files chosen in a file dialog.|
-|  `-f`  |  `--file`   |`<global.json> <month.json> <output.tex>`| Generate an output file based on the given files.              |
