@@ -12,4 +12,5 @@
         <module>TimeSheetGenerator</module>
         <module>GUI</module>
     </modules>
+
 </project>
