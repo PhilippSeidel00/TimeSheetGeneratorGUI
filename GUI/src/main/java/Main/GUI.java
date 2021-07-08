@@ -1,7 +1,17 @@
+package Main;
+
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.awt.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URL;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -19,6 +29,8 @@ public class GUI extends Application {
     private static final String DEFAULT_LANGUAGE = "en";
     private static final String DEFAULT_COUNTRY = "US";
     private static final String RESOURCE_BUNDLE_BASE_NAME = "MessagesBundle";
+    private static final String MAIN_FXML_LOCATION = "/fxml/GUI.fxml";
+    private static final String ICON_LOCATION = "/icon/gui_icon.png";
     private static final Dimension DEFAULT_DIMENSION =
             new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width / 3,
                           Toolkit.getDefaultToolkit().getScreenSize().height / 3);
@@ -38,8 +50,20 @@ public class GUI extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        initStage(stage);
+        stage.setScene(new Scene(loadRoot()));
+        stage.show();
+    }
+
+    private Parent loadRoot() throws IOException {
+        URL url = getClass().getResource(MAIN_FXML_LOCATION);
+        if (url == null) throw new FileNotFoundException();
+        return FXMLLoader.load(url);
+    }
+
+    private void initStage(Stage stage) {
         stage.setTitle(resourceBundle.getString("mainTitle"));
         stage.setResizable(false);
-        stage.show();
+        stage.getIcons().add(new Image(ICON_LOCATION));
     }
 }

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollBar?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <MenuBar layoutY="2.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <TextField layoutX="10.0" layoutY="38.0" prefHeight="25.0" prefWidth="115.0" promptText="Name" />
+      <TextField layoutX="135.0" layoutY="38.0" prefHeight="25.0" prefWidth="115.0" promptText="Vorname" />
+      <TextField layoutX="260.0" layoutY="38.0" prefHeight="25.0" prefWidth="115.0" promptText="Personalnr." />
+      <TextField layoutX="385.0" layoutY="38.0" prefHeight="25.0" prefWidth="200.0" promptText="Organisation / Institut" />
+      <TextField layoutX="595.0" layoutY="38.0" prefHeight="25.0" prefWidth="132.0" promptText="Vertragl. Arbeitszeit" />
+      <TextField layoutX="736.0" layoutY="38.0" prefHeight="25.0" prefWidth="115.0" promptText="Stundensatz" />
+      <DatePicker layoutX="10.0" layoutY="100.0" prefHeight="25.0" prefWidth="115.0" promptText="Monat / Jahr" />
+      <TextField layoutX="831.0" layoutY="113.0" prefHeight="25.0" prefWidth="115.0" promptText="Arbeitszeit aktuell" />
+      <CheckBox layoutX="873.0" layoutY="30.0" mnemonicParsing="false" text="ÜB" />
+      <CheckBox layoutX="873.0" layoutY="55.0" mnemonicParsing="false" text="GF" />
+      <CheckBox layoutX="14.0" layoutY="72.0" mnemonicParsing="false" text="speichern" />
+      <ScrollBar layoutX="939.0" layoutY="150.0" orientation="VERTICAL" prefHeight="380.0" prefWidth="10.0" />
+   </children>
+</AnchorPane>
