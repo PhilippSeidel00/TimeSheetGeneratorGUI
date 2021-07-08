@@ -13,24 +13,24 @@
    <children>
       <MenuBar layoutY="2.0">
         <menus>
-          <Menu mnemonicParsing="false" text="File">
+          <Menu mnemonicParsing="false" text="%fileText">
             <items>
               <MenuItem mnemonicParsing="false" text="Close" />
             </items>
           </Menu>
         </menus>
       </MenuBar>
-      <TextField layoutX="10.0" layoutY="38.0" prefHeight="25.0" prefWidth="115.0" promptText="Name" />
-      <TextField layoutX="135.0" layoutY="38.0" prefHeight="25.0" prefWidth="115.0" promptText="Vorname" />
-      <TextField layoutX="260.0" layoutY="38.0" prefHeight="25.0" prefWidth="115.0" promptText="Personalnr." />
-      <TextField layoutX="385.0" layoutY="38.0" prefHeight="25.0" prefWidth="200.0" promptText="Organisation / Institut" />
-      <TextField layoutX="595.0" layoutY="38.0" prefHeight="25.0" prefWidth="132.0" promptText="Vertragl. Arbeitszeit" />
-      <TextField layoutX="736.0" layoutY="38.0" prefHeight="25.0" prefWidth="115.0" promptText="Stundensatz" />
-      <DatePicker layoutX="10.0" layoutY="100.0" prefHeight="25.0" prefWidth="115.0" promptText="Monat / Jahr" />
-      <TextField layoutX="831.0" layoutY="113.0" prefHeight="25.0" prefWidth="115.0" promptText="Arbeitszeit aktuell" />
-      <CheckBox layoutX="873.0" layoutY="30.0" mnemonicParsing="false" text="ÜB" />
-      <CheckBox layoutX="873.0" layoutY="55.0" mnemonicParsing="false" text="GF" />
-      <CheckBox layoutX="14.0" layoutY="72.0" mnemonicParsing="false" text="speichern" />
+      <TextField layoutX="10.0" layoutY="38.0" prefHeight="25.0" prefWidth="115.0" promptText="%surnameTextFieldDefault" />
+      <TextField layoutX="135.0" layoutY="38.0" prefHeight="25.0" prefWidth="115.0" promptText="%nameTextFieldDefault" />
+      <TextField layoutX="260.0" layoutY="38.0" prefHeight="25.0" prefWidth="115.0" promptText="%personalIdTextFieldDefault" />
+      <TextField layoutX="385.0" layoutY="38.0" prefHeight="25.0" prefWidth="200.0" promptText="%organisationTextFieldDefault" />
+      <TextField layoutX="595.0" layoutY="38.0" prefHeight="25.0" prefWidth="132.0" promptText="%supposedWorkTimeTextFieldDefault" />
+      <TextField layoutX="736.0" layoutY="38.0" prefHeight="25.0" prefWidth="115.0" promptText="%wageTextFieldDefault" />
+      <DatePicker layoutX="10.0" layoutY="100.0" prefHeight="25.0" prefWidth="115.0" promptText="%monthYearChooserTextDefault" />
+      <TextField layoutX="804.0" layoutY="113.0" prefHeight="25.0" prefWidth="142.0" promptText="%currentWorkingTimeTextFieldDefault" />
+      <CheckBox layoutX="873.0" layoutY="30.0" mnemonicParsing="false" text="%ub" />
+      <CheckBox layoutX="873.0" layoutY="55.0" mnemonicParsing="false" text="%gf" />
+      <CheckBox layoutX="14.0" layoutY="72.0" mnemonicParsing="false" text="%saveCheckBoxText" />
       <ScrollBar layoutX="939.0" layoutY="150.0" orientation="VERTICAL" prefHeight="380.0" prefWidth="10.0" />
    </children>
 </AnchorPane>

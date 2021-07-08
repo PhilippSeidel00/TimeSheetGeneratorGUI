@@ -31,9 +31,6 @@ public class GUI extends Application {
     private static final String RESOURCE_BUNDLE_BASE_NAME = "MessagesBundle";
     private static final String MAIN_FXML_LOCATION = "/fxml/GUI.fxml";
     private static final String ICON_LOCATION = "/icon/gui_icon.png";
-    private static final Dimension DEFAULT_DIMENSION =
-            new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width / 3,
-                          Toolkit.getDefaultToolkit().getScreenSize().height / 3);
 
     public static void main(String[] args) {
         String language = DEFAULT_LANGUAGE;
@@ -58,7 +55,7 @@ public class GUI extends Application {
     private Parent loadRoot() throws IOException {
         URL url = getClass().getResource(MAIN_FXML_LOCATION);
         if (url == null) throw new FileNotFoundException();
-        return FXMLLoader.load(url);
+        return FXMLLoader.load(url, resourceBundle);
     }
 
     private void initStage(Stage stage) {
