@@ -30,6 +30,7 @@ public class GUI extends Application {
     private static final String DEFAULT_COUNTRY = "US";
     private static final String RESOURCE_BUNDLE_BASE_NAME = "MessagesBundle";
     private static final String MAIN_FXML_LOCATION = "/fxml/GUI.fxml";
+    private static final String MAIN_CSS_LOCATION = "/css/styles.css";
     private static final String ICON_LOCATION = "/icon/gui_icon.png";
 
     public static void main(String[] args) {
@@ -48,12 +49,14 @@ public class GUI extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         initStage(stage);
-        stage.setScene(new Scene(loadRoot()));
+        Scene scene = new Scene(loadRoot());
+        styleScene(scene);
+        stage.setScene(scene);
         stage.show();
     }
 
     private Parent loadRoot() throws IOException {
-        URL url = getClass().getResource(MAIN_FXML_LOCATION);
+        var url = getClass().getResource(MAIN_FXML_LOCATION);
         if (url == null) throw new FileNotFoundException();
         return FXMLLoader.load(url, resourceBundle);
     }
@@ -62,5 +65,12 @@ public class GUI extends Application {
         stage.setTitle(resourceBundle.getString("mainTitle"));
         stage.setResizable(false);
         stage.getIcons().add(new Image(ICON_LOCATION));
+    }
+
+    private void styleScene(Scene scene) throws FileNotFoundException {
+        var url = getClass().getResource(MAIN_CSS_LOCATION);
+        if (url == null) throw new FileNotFoundException();
+        var css = url.toExternalForm();
+        scene.getStylesheets().add(css);
     }
 }
