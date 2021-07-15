@@ -1,4 +1,4 @@
-package Main;
+package main.view;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -6,32 +6,32 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import main.controller.DefaultController;
+import main.controller.GUIController;
+import main.model.DefaultModel;
+import main.model.GUIModel;
 
-import java.awt.*;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URL;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**
- * Main Application class. Entry point for GUI.
+ * Entry point for GUI.
  *
  * @author Philipp Seidel
  * @version 0.1
  */
 public class GUI extends Application {
-
-    private static ResourceBundle resourceBundle;
-    private static Locale currentLocale;
-
     private static final String DEFAULT_LANGUAGE = "en";
     private static final String DEFAULT_COUNTRY = "US";
     private static final String RESOURCE_BUNDLE_BASE_NAME = "MessagesBundle";
     private static final String MAIN_FXML_LOCATION = "/fxml/GUI.fxml";
     private static final String MAIN_CSS_LOCATION = "/css/styles.css";
     private static final String ICON_LOCATION = "/icon/gui_icon.png";
+
+    private static GUIModel model;
+    private static GUIController controller;
 
     public static void main(String[] args) {
         String language = DEFAULT_LANGUAGE;
@@ -41,8 +41,13 @@ public class GUI extends Application {
             language = args[0];
             country = args[1];
         }
-        currentLocale = new Locale(language, country);
-        resourceBundle = ResourceBundle.getBundle(RESOURCE_BUNDLE_BASE_NAME, currentLocale);
+
+        Locale startLocale = new Locale(language, country);
+
+        model = new DefaultModel(startLocale,
+                ResourceBundle.getBundle(RESOURCE_BUNDLE_BASE_NAME, startLocale));
+        controller = new DefaultController(model);
+
         launch(args);
     }
 
@@ -58,11 +63,11 @@ public class GUI extends Application {
     private Parent loadRoot() throws IOException {
         var url = getClass().getResource(MAIN_FXML_LOCATION);
         if (url == null) throw new FileNotFoundException();
-        return FXMLLoader.load(url, resourceBundle);
+        return FXMLLoader.load(url, model.getResourceBundle());
     }
 
     private void initStage(Stage stage) {
-        stage.setTitle(resourceBundle.getString("mainTitle"));
+        stage.setTitle(model.getResourceBundle().getString("mainTitle"));
         stage.setResizable(false);
         stage.getIcons().add(new Image(ICON_LOCATION));
     }
