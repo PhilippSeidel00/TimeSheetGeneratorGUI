@@ -6,6 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import jfxtras.styles.jmetro.JMetro;
+import jfxtras.styles.jmetro.Style;
 import main.controller.DefaultController;
 import main.controller.GUIController;
 import main.model.DefaultModel;
@@ -55,9 +57,11 @@ public class GUI extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         initStage(stage);
+        JMetro jMetro = new JMetro(Style.LIGHT);
         Scene scene = new Scene(loadRoot());
-        styleScene(scene);
+        jMetro.setParent(loadRoot());
         stage.setScene(scene);
+        jMetro.setScene(scene);
         stage.show();
     }
 
@@ -76,10 +80,12 @@ public class GUI extends Application {
         stage.getIcons().add(new Image(ICON_LOCATION));
     }
 
+    /*
     private void styleScene(Scene scene) throws FileNotFoundException {
         var url = getClass().getResource(MAIN_CSS_LOCATION);
         if (url == null) throw new FileNotFoundException();
         var css = url.toExternalForm();
         scene.getStylesheets().add(css);
     }
+    */
 }
