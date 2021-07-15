@@ -32,6 +32,7 @@ public class GUI extends Application {
 
     private static GUIModel model;
     private static GUIController controller;
+    private static FXMLLoader loader;
 
     public static void main(String[] args) {
         String language = DEFAULT_LANGUAGE;
@@ -63,7 +64,10 @@ public class GUI extends Application {
     private Parent loadRoot() throws IOException {
         var url = getClass().getResource(MAIN_FXML_LOCATION);
         if (url == null) throw new FileNotFoundException();
-        return FXMLLoader.load(url, model.getResourceBundle());
+        loader = new FXMLLoader(url);
+        loader.setResources(model.getResourceBundle());
+        loader.setController(controller);
+        return loader.load();
     }
 
     private void initStage(Stage stage) {

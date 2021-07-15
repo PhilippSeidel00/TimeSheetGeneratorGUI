@@ -9,13 +9,14 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
+<!-- controller not specified as it is set dynamically before loading -->
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <MenuBar prefHeight="32.0" prefWidth="960.0">
         <menus>
           <Menu mnemonicParsing="false" text="%fileText">
             <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
+              <MenuItem mnemonicParsing="false" text="Close"/>
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="%languageText">
@@ -24,19 +25,24 @@
                   <MenuItem mnemonicParsing="false" text="%englishText" />
               </items>
             </Menu>
+            <Menu mnemonicParsing="false" text="%helpText">
+                <items>
+                    <MenuItem mnemonicParsing="false" text="%printDataText" onAction="#printAllData"/>
+                </items>
+            </Menu>
         </menus>
       </MenuBar>
-      <TextField layoutX="12.0" layoutY="48.0" prefHeight="25.0" prefWidth="115.0" promptText="%surnameTextFieldDefault" />
-      <TextField layoutX="137.0" layoutY="48.0" prefHeight="25.0" prefWidth="115.0" promptText="%nameTextFieldDefault" />
-      <TextField layoutX="262.0" layoutY="48.0" prefHeight="25.0" prefWidth="115.0" promptText="%personalIdTextFieldDefault" />
-      <TextField layoutX="387.0" layoutY="48.0" prefHeight="25.0" prefWidth="200.0" promptText="%organisationTextFieldDefault" />
-      <TextField layoutX="597.0" layoutY="48.0" prefHeight="25.0" prefWidth="132.0" promptText="%supposedWorkTimeTextFieldDefault" />
-      <TextField layoutX="738.0" layoutY="48.0" prefHeight="25.0" prefWidth="115.0" promptText="%wageTextFieldDefault" />
-      <DatePicker layoutX="12.0" layoutY="110.0" prefHeight="25.0" prefWidth="115.0" promptText="%monthYearChooserTextDefault" />
-      <TextField layoutX="806.0" layoutY="123.0" prefHeight="25.0" prefWidth="142.0" promptText="%currentWorkingTimeTextFieldDefault" />
-      <CheckBox layoutX="873.0" layoutY="48.0" mnemonicParsing="false" text="%ub" />
-      <CheckBox layoutX="873.0" layoutY="73.0" mnemonicParsing="false" text="%gf" />
-      <CheckBox layoutX="16.0" layoutY="82.0" mnemonicParsing="false" text="%saveCheckBoxText" />
+      <TextField fx:id="surnameField" layoutX="12.0" layoutY="48.0" prefHeight="25.0" prefWidth="115.0" promptText="%surnameTextFieldDefault" />
+      <TextField fx:id="nameField" layoutX="137.0" layoutY="48.0" prefHeight="25.0" prefWidth="115.0" promptText="%nameTextFieldDefault" />
+      <TextField fx:id="idField" layoutX="262.0" layoutY="48.0" prefHeight="25.0" prefWidth="115.0" promptText="%personalIdTextFieldDefault" />
+      <TextField fx:id="organisationField" layoutX="387.0" layoutY="48.0" prefHeight="25.0" prefWidth="200.0" promptText="%organisationTextFieldDefault" />
+      <TextField fx:id="worktimeField" layoutX="597.0" layoutY="48.0" prefHeight="25.0" prefWidth="132.0" promptText="%supposedWorkTimeTextFieldDefault" />
+      <TextField fx:id="wageField" layoutX="738.0" layoutY="48.0" prefHeight="25.0" prefWidth="115.0" promptText="%wageTextFieldDefault" />
+      <DatePicker fx:id="monthYearPicker" layoutX="12.0" layoutY="110.0" prefHeight="25.0" prefWidth="115.0" promptText="%monthYearChooserTextDefault" />
+      <TextField fx:id="currentWorktimeField" layoutX="806.0" layoutY="123.0" prefHeight="25.0" prefWidth="142.0" promptText="%currentWorkingTimeTextFieldDefault" />
+      <CheckBox fx:id="ubCheck" layoutX="873.0" layoutY="48.0" mnemonicParsing="false" text="%ub" />
+      <CheckBox fx:id="gfCheck" layoutX="873.0" layoutY="73.0" mnemonicParsing="false" text="%gf" />
+      <CheckBox fx:id="saveCheck" layoutX="16.0" layoutY="82.0" mnemonicParsing="false" text="%saveCheckBoxText" />
       <ScrollPane hbarPolicy="NEVER" layoutY="157.0" prefHeight="382.0" prefWidth="960.0" vbarPolicy="ALWAYS">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />

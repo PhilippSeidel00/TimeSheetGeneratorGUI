@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class DefaultModel implements GUIModel{
+public class DefaultModel implements GUIModel {
 
     private ResourceBundle resourceBundle;
     private Locale locale;
