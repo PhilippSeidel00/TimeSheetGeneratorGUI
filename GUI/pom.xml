@@ -12,12 +12,19 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.release>11</maven.compiler.release>
+        <maven.compiler.release>16</maven.compiler.release>
+        <maven.compiler.target>16</maven.compiler.target>
+        <maven.compiler.source>16</maven.compiler.source>
         <javafx.version>16</javafx.version>
         <javafx.maven.plugin.version>0.0.6</javafx.maven.plugin.version>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>se.alipsa</groupId>
+            <artifactId>fx-yearmonth-picker</artifactId>
+            <version>1.0.2</version>
+        </dependency>
         <dependency>
             <groupId>org.jfxtras</groupId>
             <artifactId>jmetro</artifactId>

@@ -11,6 +11,8 @@
 
 <!-- controller not specified as it is set dynamically before loading -->
 
+<?import se.alipsa.ymp.YearMonthPicker?>
+<?import se.alipsa.ymp.YearMonthPickerCombo?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <MenuBar prefHeight="32.0" prefWidth="960.0">
@@ -39,7 +41,7 @@
       <TextField fx:id="organisationField" layoutX="387.0" layoutY="48.0" prefHeight="25.0" prefWidth="200.0" promptText="%organisationTextFieldDefault" />
       <TextField fx:id="worktimeField" layoutX="597.0" layoutY="48.0" prefHeight="25.0" prefWidth="132.0" promptText="%supposedWorkTimeTextFieldDefault" />
       <TextField fx:id="wageField" layoutX="738.0" layoutY="48.0" prefHeight="25.0" prefWidth="115.0" promptText="%wageTextFieldDefault" />
-      <DatePicker fx:id="monthYearPicker" layoutX="12.0" layoutY="110.0" prefHeight="26.0" prefWidth="130.0" promptText="%monthYearChooserTextDefault" />
+      <YearMonthPickerCombo fx:id="yearMonthPicker" layoutX="12.0" layoutY="110.0" prefHeight="26.0" prefWidth="130.0" promptText="%monthYearChooserTextDefault" />
       <TextField fx:id="currentWorktimeField" layoutX="806.0" layoutY="123.0" prefHeight="25.0" prefWidth="142.0" promptText="%currentWorkingTimeTextFieldDefault" />
       <CheckBox fx:id="ubCheck" layoutX="873.0" layoutY="48.0" mnemonicParsing="false" text="%ub" />
       <CheckBox fx:id="gfCheck" layoutX="873.0" layoutY="73.0" mnemonicParsing="false" text="%gf" />

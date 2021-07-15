@@ -57,21 +57,22 @@ public class GUI extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         initStage(stage);
+        initLoader();
         JMetro jMetro = new JMetro(Style.LIGHT);
-        Scene scene = new Scene(loadRoot());
-        jMetro.setParent(loadRoot());
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        jMetro.setParent(root);
         stage.setScene(scene);
         jMetro.setScene(scene);
         stage.show();
     }
 
-    private Parent loadRoot() throws IOException {
+    private void initLoader() throws IOException {
         var url = getClass().getResource(MAIN_FXML_LOCATION);
         if (url == null) throw new FileNotFoundException();
         loader = new FXMLLoader(url);
         loader.setResources(model.getResourceBundle());
         loader.setController(controller);
-        return loader.load();
     }
 
     private void initStage(Stage stage) {

@@ -5,6 +5,8 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import main.model.GUIModel;
+import se.alipsa.ymp.YearMonthPicker;
+import se.alipsa.ymp.YearMonthPickerCombo;
 
 
 /**
@@ -39,7 +41,7 @@ public class DefaultController implements GUIController {
     private TextField currentWorktimeField;
 
     @FXML
-    private DatePicker monthYearPicker;
+    private YearMonthPickerCombo yearMonthPicker;
 
     @FXML
     private CheckBox ubCheck;
@@ -49,6 +51,7 @@ public class DefaultController implements GUIController {
 
     @FXML
     private CheckBox saveCheck;
+
 
     public DefaultController(GUIModel model) {
         this.model = model;
@@ -60,7 +63,7 @@ public class DefaultController implements GUIController {
                 "name: %s, " +
                 "id: %s, " +
                 "organisation: %s, " +
-                "workTime: %d, " +
+                "workTime: %s, " +
                 "wage: %e, " +
                 "ub: %b, " +
                 "gf: %b, " +
