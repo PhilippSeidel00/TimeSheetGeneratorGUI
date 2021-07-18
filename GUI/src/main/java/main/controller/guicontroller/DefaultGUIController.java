@@ -1,8 +1,7 @@
 package main.controller.guicontroller;
 
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
@@ -11,6 +10,8 @@ import se.alipsa.ymp.YearMonthPickerCombo;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 
 /**
@@ -57,9 +58,9 @@ public class DefaultGUIController implements GUIController {
     private CheckBox saveCheck;
 
     @FXML
-    private VBox worksliceBox;
+    private VBox workSliceBox;
 
-    public DefaultGUIController(GUIModel model) {
+    public DefaultGUIController(GUIModel model) throws FileNotFoundException {
         this.model = model;
     }
 
@@ -86,13 +87,17 @@ public class DefaultGUIController implements GUIController {
                 gfCheck.isSelected(),
                 saveCheck.isSelected());
     }
-    //for testing only (playground)
-    public void test() throws FileNotFoundException, IOException {
-        var url = getClass().getResource("/fxml/workslice.fxml");
-        if (url == null) throw new FileNotFoundException();
-        FXMLLoader loader = new FXMLLoader(url);
-        loader.setResources(model.getResourceBundle());
-        loader.setController(new Object());
-        worksliceBox.getChildren().add(loader.load());
+
+    public void addWorkSlice() {
+        try {
+            model.addWorkSlice();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        Bindings.bindContent(workSliceBox.getChildren(), model.getWorkSliceList());
     }
 }

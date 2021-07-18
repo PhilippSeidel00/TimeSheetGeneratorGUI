@@ -18,7 +18,7 @@
         <menus>
           <Menu mnemonicParsing="false" text="%fileText">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#test" text="Close" />
+              <MenuItem mnemonicParsing="false" onAction="#addWorkSlice" text="Close" />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="%languageText">
@@ -40,7 +40,7 @@
       <TextField fx:id="organisationField" layoutX="387.0" layoutY="48.0" prefHeight="25.0" prefWidth="200.0" promptText="%organisationTextFieldDefault" />
       <TextField fx:id="worktimeField" layoutX="597.0" layoutY="48.0" prefHeight="25.0" prefWidth="132.0" promptText="%supposedWorkTimeTextFieldDefault" />
       <TextField fx:id="wageField" layoutX="738.0" layoutY="48.0" prefHeight="25.0" prefWidth="115.0" promptText="%wageTextFieldDefault" />
-      <TextField fx:id="currentWorktimeField" layoutX="806.0" layoutY="123.0" prefHeight="25.0" prefWidth="142.0" promptText="%currentWorkingTimeTextFieldDefault" />
+      <TextField fx:id="currentWorktimeField" editable="false" layoutX="806.0" layoutY="123.0" prefHeight="25.0" prefWidth="142.0" promptText="%currentWorkingTimeTextFieldDefault" />
       <CheckBox fx:id="ubCheck" layoutX="873.0" layoutY="48.0" mnemonicParsing="false" text="%ub" />
       <CheckBox fx:id="gfCheck" layoutX="873.0" layoutY="73.0" mnemonicParsing="false" text="%gf" />
       <CheckBox fx:id="saveCheck" layoutX="16.0" layoutY="82.0" mnemonicParsing="false" text="%saveCheckBoxText" />
@@ -48,13 +48,14 @@
          <content>
             <VBox alignment="TOP_CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="381.0" prefWidth="945.0">
                <children>
-                  <VBox fx:id="worksliceBox" prefHeight="10.0" prefWidth="946.0" />
+                  <VBox fx:id="workSliceBox" prefHeight="0.0" prefWidth="100.0" />
                   <AnchorPane minHeight="60.0" minWidth="946.0" prefHeight="60.0" prefWidth="946.0">
                      <children>
-                        <Button layoutX="460.0" layoutY="17.0" mnemonicParsing="false" onAction="#test" text="+" />
+                        <Button layoutX="460.0" layoutY="17.0" mnemonicParsing="false" onAction="#addWorkSlice" text="+" />
                      </children>
                   </AnchorPane>
                </children></VBox>
-         </content></ScrollPane>
+         </content>
+      </ScrollPane>
    </children>
 </AnchorPane>

@@ -27,7 +27,6 @@ import java.util.ResourceBundle;
 public class GUI extends Application {
     private static final String DEFAULT_LANGUAGE = "en";
     private static final String DEFAULT_COUNTRY = "US";
-    private static final String RESOURCE_BUNDLE_BASE_NAME = "MessagesBundle";
     private static final String MAIN_FXML_LOCATION = "/fxml/GUI.fxml";
     private static final String MAIN_CSS_LOCATION = "/css/styles.css";
     private static final String ICON_LOCATION = "/icon/gui_icon.png";
@@ -44,12 +43,14 @@ public class GUI extends Application {
             language = args[0];
             country = args[1];
         }
-
         Locale startLocale = new Locale(language, country);
 
-        model = new DefaultModel(startLocale,
-                ResourceBundle.getBundle(RESOURCE_BUNDLE_BASE_NAME, startLocale));
-        controller = new DefaultGUIController(model);
+        try {
+            model = new DefaultModel(startLocale);
+            controller = new DefaultGUIController(model);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
         launch(args);
     }
@@ -60,6 +61,7 @@ public class GUI extends Application {
         initLoader();
         JMetro jMetro = new JMetro(Style.LIGHT);
         Parent root = loader.load();
+        controller.initialize(null, null);
         Scene scene = new Scene(root);
         styleScene(scene);
         jMetro.setParent(root);
