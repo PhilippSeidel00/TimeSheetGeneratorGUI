@@ -6,6 +6,7 @@ import javafx.scene.Node;
 import main.controller.componentcontroller.ComponentController;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -36,19 +37,6 @@ public interface GUIModel extends Observable {
     void addWorkSlice() throws IOException;
 
     /**
-     * Get the workslice at given index
-     * @param index the given index
-     * @return the workslice at given index
-     */
-    Node getWorkSlice(int index);
-
-    /**
-     * Get the number of known workslices
-     * @return the number of known workslices
-     */
-    int getWorkSliceCount();
-
-    /**
      * Remove workslice with given {@link ComponentController}
      * @param controller the given controller
      */
@@ -59,4 +47,10 @@ public interface GUIModel extends Observable {
      * @return the observable workslice list
      */
     ObservableList<Node> getWorkSliceList();
+
+    /**
+     * get List of workslice controllers
+     * @return the list of workslice controllers
+     */
+    List<ComponentController> getWorkSliceControllers();
 }

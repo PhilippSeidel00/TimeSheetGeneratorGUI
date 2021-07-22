@@ -45,6 +45,6 @@ public class WorksliceController implements ComponentController {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        //this controller comes pre-initialized especially for you :)
     }
 }

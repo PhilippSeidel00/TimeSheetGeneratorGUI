@@ -54,16 +54,6 @@ public class DefaultModel implements GUIModel {
     }
 
     @Override
-    public Node getWorkSlice(int index) {
-        return workslices.get(index);
-    }
-
-    @Override
-    public int getWorkSliceCount() {
-        return workslices.size();
-    }
-
-    @Override
     public void removeWorkSlice(ComponentController controller) {
         workslices.remove(worksliceMap.get(controller));
         worksliceMap.remove(controller);
@@ -72,6 +62,11 @@ public class DefaultModel implements GUIModel {
     @Override
     public ObservableList<Node> getWorkSliceList() {
         return workslices;
+    }
+
+    @Override
+    public List<ComponentController> getWorkSliceControllers() {
+        return new ArrayList<>(this.worksliceMap.keySet());
     }
 
     @Override

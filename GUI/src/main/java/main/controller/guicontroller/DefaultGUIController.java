@@ -11,6 +11,7 @@ import se.alipsa.ymp.YearMonthPickerCombo;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.time.YearMonth;
 import java.util.ResourceBundle;
 
 
@@ -21,6 +22,9 @@ import java.util.ResourceBundle;
  * @version 0.1
  */
 public class DefaultGUIController implements GUIController {
+
+    //number of months prior and after current month that are shown in the year/month picker
+    private static final int MONTH_RANGE = 8;
 
     private final GUIModel model;
 
@@ -46,6 +50,12 @@ public class DefaultGUIController implements GUIController {
     private TextField currentWorktimeField;
 
     @FXML
+    private TextField carryInField;
+
+    @FXML
+    private TextField carryOutField;
+
+    @FXML
     private YearMonthPickerCombo yearMonthPicker;
 
     @FXML
@@ -64,7 +74,11 @@ public class DefaultGUIController implements GUIController {
         this.model = model;
     }
 
+    /**
+     * print all input data provided by the user
+     */
     public void printAllData() {
+        //print static userdata
         System.out.printf(
                 "surname: %s, " +
                 "name: %s, " +
@@ -74,7 +88,10 @@ public class DefaultGUIController implements GUIController {
                 "wage: %e, " +
                 "ub: %b, " +
                 "gf: %b, " +
-                "save: %b\n",
+                        "carry in: %d, " +
+                        "carry out: %d, " +
+                "save: %b\n" +
+                        "workslices:\n",
                 surnameField.getCharacters().toString(),
                 nameField.getCharacters().toString(),
                 idField.getCharacters().toString(),
@@ -85,9 +102,39 @@ public class DefaultGUIController implements GUIController {
                         "-1" : wageField.getCharacters().toString()),
                 ubCheck.isSelected(),
                 gfCheck.isSelected(),
+                Integer.parseInt(carryInField.getCharacters().toString().equals("") ?
+                        "-1" : carryInField.getCharacters().toString()),
+                Integer.parseInt(carryOutField.getCharacters().toString().equals("") ?
+                        "-1" : carryOutField.getCharacters().toString()),
                 saveCheck.isSelected());
+        //print data in workslices
+        if (model.getWorkSliceControllers().isEmpty()) {
+            System.out.println("no workslices found.");
+        } else {
+            model.getWorkSliceControllers().forEach(c -> {
+                System.out.printf("occupation: %s, " +
+                                "date: %s, " +
+                                "start: %s, " +
+                                "end: %s, " +
+                                "pause: %e, " +
+                                "vacation: %b, " +
+                                "worktime: %e\n",
+                        "test",
+                        "test",
+                        "test",
+                        "test",
+                        -1f,
+                        false,
+                        -1f);
+            });
+        }
+
     }
 
+    /**
+     * called by the '+'-button,
+     * adds a blank workslice to the workslice list
+     */
     public void addWorkSlice() {
         try {
             model.addWorkSlice();
