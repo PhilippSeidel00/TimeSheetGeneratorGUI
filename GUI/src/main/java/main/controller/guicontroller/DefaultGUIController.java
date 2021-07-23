@@ -31,6 +31,8 @@ public class DefaultGUIController implements GUIController {
 
     private final GUIModel model;
 
+    private double currentTotalWorkTime;
+
     @FXML
     private TextField surnameField;
 
@@ -76,6 +78,7 @@ public class DefaultGUIController implements GUIController {
 
     public DefaultGUIController(GUIModel model) throws FileNotFoundException {
         this.model = model;
+        this.currentTotalWorkTime = model.getTotalWorkTime();
     }
 
     /**
@@ -154,5 +157,12 @@ public class DefaultGUIController implements GUIController {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Bindings.bindContent(workSliceBox.getChildren(), model.getWorkSliceList());
+        model.subscribe(this);
+    }
+
+    @Override
+    public void update() {
+        this.currentTotalWorkTime = model.getTotalWorkTime();
+        this.currentWorktimeField.setText(model.formatTime(currentTotalWorkTime));
     }
 }

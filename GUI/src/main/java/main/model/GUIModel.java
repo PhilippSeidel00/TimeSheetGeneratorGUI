@@ -4,6 +4,7 @@ import javafx.beans.Observable;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import main.controller.workslicecontroller.WorksliceController;
+import main.observer.Subject;
 
 import java.io.IOException;
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.ResourceBundle;
  * @author Philipp Seidel
  * @version 0.1
  */
-public interface GUIModel {
+public interface GUIModel extends Subject {
 
     /**
      * set current {@link java.util.ResourceBundle}
@@ -65,14 +66,9 @@ public interface GUIModel {
     void setTotalWorkTime(double totalWorkTime);
 
     /**
-     * get the used time format
-     * @return the used time format
+     * format given double number of minutes into usable String format
+     * @param time the time value that is to be formatted
+     * @return the usable String format
      */
-    String getTimeFormat();
-
-    /**
-     * get the length a worktime string should be shortened to
-     * @return the length
-     */
-    int getWorkTimeStringLength();
+    String formatTime(double time);
 }

@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import main.controller.workslicecontroller.WorksliceController;
 import main.controller.workslicecontroller.DefaultWorksliceController;
+import main.observer.Observer;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -17,23 +18,23 @@ public class DefaultModel implements GUIModel {
 
     private static final String WORKSLICE_FXML_LOCATION = "/fxml/workslice.fxml";
     private static final String RESOURCE_BUNDLE_BASE_NAME = "MessagesBundle";
-    //format for worktime strings
-    private static final String WORKTIME_FORMAT = "%s h";
-    //the length a worktime string should be cut to
-    private static final int WORKTIME_STRING_LENGTH = 5;
+    private static final String WORKTIME_FORMAT = "%.3f h"; //format for worktime strings
 
     //TODO: find better way of storing workslices
     private final Map<WorksliceController, Node> worksliceMap;
     private final ObservableList<Node> workslices;
+    private final List<Observer> subscribers;
+
+
     private ResourceBundle resourceBundle;
     private double workTime = 0;
-    private ObservableDoubleValue ObservableWorkTime = new SimpleDoubleProperty(workTime);
 
 
     public DefaultModel(Locale locale) throws FileNotFoundException {
         this.resourceBundle = ResourceBundle.getBundle(RESOURCE_BUNDLE_BASE_NAME, locale);
         this.worksliceMap = new HashMap<>();
         this.workslices = FXCollections.observableArrayList();
+        this.subscribers = new ArrayList<>();
     }
 
     @Override
@@ -84,17 +85,20 @@ public class DefaultModel implements GUIModel {
     @Override
     public void setTotalWorkTime(double totalWorkTime) {
         this.workTime = totalWorkTime;
-        System.out.println("changed worktime to: " + totalWorkTime);
+        notifyObservers();
     }
 
     @Override
-    public String getTimeFormat() {
-        return WORKTIME_FORMAT;
+    public String formatTime(double time) {
+        return String.format(WORKTIME_FORMAT, time);
     }
 
     @Override
-    public int getWorkTimeStringLength() {
-        return WORKTIME_STRING_LENGTH;
+    public void subscribe(Observer observer) {
+        this.subscribers.add(observer);
     }
 
+    private void notifyObservers() {
+        this.subscribers.forEach(Observer::update);
+    }
 }

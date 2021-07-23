@@ -2,6 +2,7 @@ package main.controller;
 
 import javafx.beans.InvalidationListener;
 import javafx.fxml.Initializable;
+import main.observer.Observer;
 
 /**
  * Controller for javafx
@@ -9,5 +10,5 @@ import javafx.fxml.Initializable;
  * @author Philipp Seidel
  * @version 0.1
  */
-public interface Controller extends Initializable {
+public interface Controller extends Initializable, Observer {
 }

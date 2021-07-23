@@ -25,7 +25,6 @@ import java.util.ResourceBundle;
 public class DefaultWorksliceController implements WorksliceController {
 
     private final String workTimeErrorString;
-    private final String worktimeFormat;
 
     private double workTime;
     private boolean workTimeError;
@@ -35,7 +34,6 @@ public class DefaultWorksliceController implements WorksliceController {
     public DefaultWorksliceController(GUIModel model) {
         this.model = model;
         workTimeErrorString = model.getResourceBundle().getString("workTimeErrorText");
-        this.worktimeFormat = model.getTimeFormat();
     }
 
     @FXML
@@ -62,6 +60,7 @@ public class DefaultWorksliceController implements WorksliceController {
     private CheckBox vacationCheck;
 
     public void close() {
+        model.setTotalWorkTime(model.getTotalWorkTime() - workTime);
         model.removeWorkSlice(this);
     }
 
@@ -118,18 +117,17 @@ public class DefaultWorksliceController implements WorksliceController {
     }
 
     private void setWorktimeField(LocalTime startTime, LocalTime endTime) {
-        var oldTotalWorkingTime = model.getTotalWorkTime() - workTime;
-        workTime = Duration.between(startTime, endTime).toMinutes() / 60d;
-        if (workTime < 0) {
-            setWorkTimeError(true);
+        var newWorkTime = Duration.between(startTime, endTime).toMinutes() / 60d;
+        var isValid = newWorkTime >= 0;
+        setWorkTimeError(!isValid);
+        model.setTotalWorkTime(model.getTotalWorkTime() - workTime + (isValid ? newWorkTime : 0));
+        if (isValid) {
+            workTime = newWorkTime;
+            worktimeField.setText(model.formatTime(workTime));
         } else {
-            setWorkTimeError(false);
-            var workTimeString = String.valueOf(workTime);
-            workTimeString = workTimeString.substring(0,
-                    Math.min(workTimeString.length(), model.getWorkTimeStringLength()));
-            worktimeField.setText(String.format(worktimeFormat, workTimeString));
-            model.setTotalWorkTime(oldTotalWorkingTime + workTime);
+            workTime = 0;
         }
+
     }
 
     private void setWorkTimeError(boolean isError) {
@@ -143,5 +141,9 @@ public class DefaultWorksliceController implements WorksliceController {
         }
         worktimeField.setStyle(style);
         workTimeError = isError;
+    }
+
+    @Override
+    public void update() {
     }
 }
