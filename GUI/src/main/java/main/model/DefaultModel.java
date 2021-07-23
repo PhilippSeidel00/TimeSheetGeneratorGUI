@@ -18,7 +18,7 @@ public class DefaultModel implements GUIModel {
 
     private static final String WORKSLICE_FXML_LOCATION = "/fxml/workslice.fxml";
     private static final String RESOURCE_BUNDLE_BASE_NAME = "MessagesBundle";
-    private static final String WORKTIME_FORMAT = "%.3f h"; //format for worktime strings
+    private static final String WORKTIME_FORMAT = "%.2f h"; //format for worktime strings
 
     //TODO: find better way of storing workslices
     private final Map<WorksliceController, Node> worksliceMap;

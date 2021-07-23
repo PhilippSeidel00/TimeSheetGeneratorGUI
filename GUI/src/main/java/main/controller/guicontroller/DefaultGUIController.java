@@ -86,7 +86,7 @@ public class DefaultGUIController implements GUIController {
      */
     public void printAllData() {
         //print static userdata
-        System.out.printf(
+        System.out.printf( "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
                 "surname: %s, " +
                 "name: %s, " +
                 "id: %s, " +
@@ -98,7 +98,8 @@ public class DefaultGUIController implements GUIController {
                         "YearMonth: %s, " +
                         "carry in: %d, " +
                         "carry out: %d, " +
-                "save: %b\n" +
+                "save: %b, " +
+                        "total worktime: %f\n" +
                         "workslices:\n",
                 surnameField.getCharacters().toString(),
                 nameField.getCharacters().toString(),
@@ -115,7 +116,8 @@ public class DefaultGUIController implements GUIController {
                         "-1" : carryInField.getCharacters().toString()),
                 Integer.parseInt(carryOutField.getCharacters().toString().equals("") ?
                         "-1" : carryOutField.getCharacters().toString()),
-                saveCheck.isSelected());
+                saveCheck.isSelected(),
+                currentTotalWorkTime);
         //print data in workslices
         if (model.getWorkSliceControllers().isEmpty()) {
             System.out.println("no workslices found.");
