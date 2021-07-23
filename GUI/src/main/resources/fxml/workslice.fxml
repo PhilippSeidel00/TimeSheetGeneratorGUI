@@ -6,13 +6,18 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
+<?import main.view.components.TimeSpinner?>
+<?import javafx.scene.control.Label?>
 <AnchorPane minHeight="100.0" minWidth="945.0" prefHeight="100.0" prefWidth="945.0" style="-fx-border-width: 1; -fx-border-style: dashed; -fx-border-color: grey;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <TextField fx:id="occupationField" layoutX="15.0" layoutY="38.0" prefHeight="26.0" prefWidth="200.0" promptText="%occupationText" />
-      <TextField layoutX="395.0" layoutY="38.0" prefHeight="26.0" prefWidth="100.0" promptText="&lt;timepicker&gt;" />
-      <TextField layoutX="510.0" layoutY="37.0" prefHeight="26.0" prefWidth="100.0" promptText="&lt;timePicker&gt;" />
-      <TextField layoutX="625.0" layoutY="38.0" prefHeight="26.0" prefWidth="100.0" promptText="&lt;timePicker&gt;" />
-      <TextField fx:id="worktimeField" editable="false" layoutX="831.0" layoutY="38.0" prefHeight="26.0" prefWidth="100.0" promptText="&lt;result&gt;" />
+      <Label layoutX="395.0" layoutY="13.0" prefHeight="26.0" prefWidth="100.0" text="%startText" />
+      <TimeSpinner fx:id="startSpinner" layoutX="395.0" layoutY="38.0" prefHeight="26.0" prefWidth="100.0" />
+      <Label layoutX="510.0" layoutY="13.0" prefHeight="26.0" prefWidth="100.0" text="%endText" />
+      <TimeSpinner fx:id="endSpinner" layoutX="510.0" layoutY="37.0" prefHeight="26.0" prefWidth="100.0" />
+      <TextField fx:id="pauseField" layoutX="625.0" layoutY="38.0" prefHeight="26.0" prefWidth="100.0" promptText="%pauseText" />
+      <Label layoutX="831.0" layoutY="13.0" prefHeight="26.0" prefWidth="100.0" text="%workTimeText" />
+      <TextField fx:id="worktimeField" editable="false" layoutX="831.0" layoutY="38.0" prefHeight="26.0" prefWidth="100.0" />
       <DatePicker fx:id="datePicker" layoutX="230.0" layoutY="38.0" prefHeight="26.0" prefWidth="150.0" />
       <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#close" prefHeight="20.0" prefWidth="20.0" text="X" />
       <CheckBox fx:id="vacationCheck" layoutX="740.0" layoutY="42.0" mnemonicParsing="false" text="%vacationText" />

@@ -1,13 +1,13 @@
 package main.model;
 
-import javafx.beans.InvalidationListener;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.value.ObservableDoubleValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.layout.VBox;
-import main.controller.componentcontroller.ComponentController;
-import main.controller.componentcontroller.WorksliceController;
+import main.controller.workslicecontroller.WorksliceController;
+import main.controller.workslicecontroller.DefaultWorksliceController;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -17,11 +17,17 @@ public class DefaultModel implements GUIModel {
 
     private static final String WORKSLICE_FXML_LOCATION = "/fxml/workslice.fxml";
     private static final String RESOURCE_BUNDLE_BASE_NAME = "MessagesBundle";
+    //format for worktime strings
+    private static final String WORKTIME_FORMAT = "%s h";
+    //the length a worktime string should be cut to
+    private static final int WORKTIME_STRING_LENGTH = 5;
 
     //TODO: find better way of storing workslices
-    private final Map<ComponentController, Node> worksliceMap;
+    private final Map<WorksliceController, Node> worksliceMap;
     private final ObservableList<Node> workslices;
     private ResourceBundle resourceBundle;
+    private double workTime = 0;
+    private ObservableDoubleValue ObservableWorkTime = new SimpleDoubleProperty(workTime);
 
 
     public DefaultModel(Locale locale) throws FileNotFoundException {
@@ -45,16 +51,17 @@ public class DefaultModel implements GUIModel {
         var url = getClass().getResource(WORKSLICE_FXML_LOCATION);
         if (url == null) throw new FileNotFoundException();
         var loader = new FXMLLoader(url);
-        var controller = new WorksliceController(this);
+        var controller = new DefaultWorksliceController(this);
         loader.setResources(resourceBundle);
         loader.setController(controller);
         Node workslice = loader.load();
+        controller.initialize(null, null);
         worksliceMap.put(controller, workslice);
         workslices.add(workslice);
     }
 
     @Override
-    public void removeWorkSlice(ComponentController controller) {
+    public void removeWorkSlice(WorksliceController controller) {
         workslices.remove(worksliceMap.get(controller));
         worksliceMap.remove(controller);
     }
@@ -65,17 +72,29 @@ public class DefaultModel implements GUIModel {
     }
 
     @Override
-    public List<ComponentController> getWorkSliceControllers() {
+    public List<WorksliceController> getWorkSliceControllers() {
         return new ArrayList<>(this.worksliceMap.keySet());
     }
 
     @Override
-    public void addListener(InvalidationListener invalidationListener) {
-        workslices.addListener(invalidationListener);
+    public double getTotalWorkTime() {
+        return this.workTime;
     }
 
     @Override
-    public void removeListener(InvalidationListener invalidationListener) {
-        workslices.removeListener(invalidationListener);
+    public void setTotalWorkTime(double totalWorkTime) {
+        this.workTime = totalWorkTime;
+        System.out.println("changed worktime to: " + totalWorkTime);
     }
+
+    @Override
+    public String getTimeFormat() {
+        return WORKTIME_FORMAT;
+    }
+
+    @Override
+    public int getWorkTimeStringLength() {
+        return WORKTIME_STRING_LENGTH;
+    }
+
 }

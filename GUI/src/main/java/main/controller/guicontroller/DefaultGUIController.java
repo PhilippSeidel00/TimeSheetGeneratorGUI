@@ -1,17 +1,23 @@
 package main.controller.guicontroller;
 
+import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import main.model.GUIModel;
+import main.view.components.TimeSpinner;
 import se.alipsa.ymp.YearMonthPickerCombo;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
-import java.time.YearMonth;
 import java.util.ResourceBundle;
 
 
@@ -22,9 +28,6 @@ import java.util.ResourceBundle;
  * @version 0.1
  */
 public class DefaultGUIController implements GUIController {
-
-    //number of months prior and after current month that are shown in the year/month picker
-    private static final int MONTH_RANGE = 8;
 
     private final GUIModel model;
 
@@ -70,6 +73,7 @@ public class DefaultGUIController implements GUIController {
     @FXML
     private VBox workSliceBox;
 
+
     public DefaultGUIController(GUIModel model) throws FileNotFoundException {
         this.model = model;
     }
@@ -88,6 +92,7 @@ public class DefaultGUIController implements GUIController {
                 "wage: %e, " +
                 "ub: %b, " +
                 "gf: %b, " +
+                        "YearMonth: %s, " +
                         "carry in: %d, " +
                         "carry out: %d, " +
                 "save: %b\n" +
@@ -102,6 +107,7 @@ public class DefaultGUIController implements GUIController {
                         "-1" : wageField.getCharacters().toString()),
                 ubCheck.isSelected(),
                 gfCheck.isSelected(),
+                yearMonthPicker.getValue(),
                 Integer.parseInt(carryInField.getCharacters().toString().equals("") ?
                         "-1" : carryInField.getCharacters().toString()),
                 Integer.parseInt(carryOutField.getCharacters().toString().equals("") ?
@@ -118,14 +124,16 @@ public class DefaultGUIController implements GUIController {
                                 "end: %s, " +
                                 "pause: %e, " +
                                 "vacation: %b, " +
-                                "worktime: %e\n",
-                        "test",
-                        "test",
-                        "test",
-                        "test",
-                        -1f,
-                        false,
-                        -1f);
+                                "worktime: %e, " +
+                                "valid: %b\n",
+                        c.getOccupation(),
+                        c.getDate(),
+                        c.getStart(),
+                        c.getEnd(),
+                        c.getPause(),
+                        c.isVacation(),
+                        c.getWorkTime(),
+                        c.isValid());
             });
         }
 

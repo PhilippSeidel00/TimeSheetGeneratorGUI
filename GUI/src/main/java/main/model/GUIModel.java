@@ -3,11 +3,10 @@ package main.model;
 import javafx.beans.Observable;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
-import main.controller.componentcontroller.ComponentController;
+import main.controller.workslicecontroller.WorksliceController;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**
@@ -17,7 +16,7 @@ import java.util.ResourceBundle;
  * @author Philipp Seidel
  * @version 0.1
  */
-public interface GUIModel extends Observable {
+public interface GUIModel {
 
     /**
      * set current {@link java.util.ResourceBundle}
@@ -37,10 +36,10 @@ public interface GUIModel extends Observable {
     void addWorkSlice() throws IOException;
 
     /**
-     * Remove workslice with given {@link ComponentController}
+     * Remove workslice with given {@link WorksliceController}
      * @param controller the given controller
      */
-    void removeWorkSlice(ComponentController controller);
+    void removeWorkSlice(WorksliceController controller);
 
     /**
      * get observable workslice list
@@ -52,5 +51,28 @@ public interface GUIModel extends Observable {
      * get List of workslice controllers
      * @return the list of workslice controllers
      */
-    List<ComponentController> getWorkSliceControllers();
+    List<WorksliceController> getWorkSliceControllers();
+
+    /**
+     * get the total worktime of all workslices
+     * @return the total worktime of all workslices
+     */
+    double getTotalWorkTime();
+
+    /**
+     * set the total worktime of all workslices
+     */
+    void setTotalWorkTime(double totalWorkTime);
+
+    /**
+     * get the used time format
+     * @return the used time format
+     */
+    String getTimeFormat();
+
+    /**
+     * get the length a worktime string should be shortened to
+     * @return the length
+     */
+    int getWorkTimeStringLength();
 }
