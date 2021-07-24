@@ -6,6 +6,7 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
@@ -13,6 +14,8 @@
 
 <!-- controller not specified as it is set dynamically before loading -->
 
+<?import main.view.components.MoneySpinner?>
+<?import javafx.scene.control.Label?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <MenuBar prefHeight="32.0" prefWidth="960.0">
@@ -39,23 +42,26 @@
       <TextField fx:id="nameField" layoutX="137.0" layoutY="48.0" prefHeight="25.0" prefWidth="115.0" promptText="%nameTextFieldDefault" />
       <TextField fx:id="idField" layoutX="262.0" layoutY="48.0" prefHeight="25.0" prefWidth="115.0" promptText="%personalIdTextFieldDefault" />
       <TextField fx:id="organisationField" layoutX="387.0" layoutY="48.0" prefHeight="25.0" prefWidth="200.0" promptText="%organisationTextFieldDefault" />
-      <TextField fx:id="worktimeField" layoutX="597.0" layoutY="48.0" prefHeight="25.0" prefWidth="132.0" promptText="%supposedWorkTimeTextFieldDefault" />
-      <TextField fx:id="wageField" layoutX="738.0" layoutY="48.0" prefHeight="25.0" prefWidth="115.0" promptText="%wageTextFieldDefault" />
+       <Label layoutX="738.0" layoutY="25.0" prefHeight="25.0" prefWidth="115.0" text="%wageText" />
+      <MoneySpinner fx:id="wageSpinner" layoutX="738.0" layoutY="48.0" prefHeight="25.0" prefWidth="115.0" />
       <TextField fx:id="currentWorktimeField" editable="false" layoutX="806.0" layoutY="123.0" prefHeight="25.0" prefWidth="142.0" promptText="%currentWorkingTimeTextFieldDefault" />
       <CheckBox fx:id="ubCheck" layoutX="873.0" layoutY="48.0" mnemonicParsing="false" text="%ub" />
       <CheckBox fx:id="gfCheck" layoutX="873.0" layoutY="73.0" mnemonicParsing="false" text="%gf" />
       <CheckBox fx:id="saveCheck" layoutX="16.0" layoutY="82.0" mnemonicParsing="false" text="%saveCheckBoxText" />
        <ScrollPane hbarPolicy="NEVER" layoutY="157.0" prefHeight="382.0" prefWidth="960.0" vbarPolicy="ALWAYS">
            <VBox alignment="TOP_CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="381.0" prefWidth="945.0">
-               <VBox fx:id="workSliceBox" prefHeight="0.0" prefWidth="100.0"/>
+               <VBox fx:id="workSliceBox" prefHeight="0.0" prefWidth="100.0" />
                <AnchorPane minHeight="60.0" minWidth="946.0" prefHeight="60.0" prefWidth="946.0">
-                   <Button layoutX="460.0" layoutY="17.0" mnemonicParsing="false" onAction="#addWorkSlice"
-                           text="+"/>
+                   <Button layoutX="460.0" layoutY="17.0" mnemonicParsing="false" onAction="#addWorkSlice" text="+" />
                </AnchorPane>
            </VBox>
        </ScrollPane>
-      <TextField fx:id="carryOutField" editable="false" layoutX="277.0" layoutY="123.0" prefWidth="130.0" promptText="%carryOutTextFieldDefault" />
-      <TextField fx:id="carryInField" layoutX="137.0" layoutY="123.0" prefHeight="26.0" prefWidth="130.0" promptText="%carryInTextFieldDefault" />
+       <Label layoutX="277.0" layoutY="105.0" prefWidth="130.0" text="%carryOutText" />
+      <TextField fx:id="carryOutField" editable="false" layoutX="277.0" layoutY="123.0" prefWidth="130.0" promptText="0h" />
+       <Label layoutX="137.0" layoutY="100.0" prefHeight="26.0" prefWidth="130.0" text="%carryInText" />
+       <Spinner fx:id="carryInSpinner" editable="true" layoutX="137.0" layoutY="123.0" prefHeight="26.0" prefWidth="130.0" />
       <YearMonthPickerCombo fx:id="yearMonthPicker" layoutX="12.0" layoutY="123.0" prefHeight="26.0" prefWidth="115.0" />
+       <Label layoutX="597.0" layoutY="25.0" prefHeight="25.0" prefWidth="132.0" text="%supposedWorkTimeText" />
+      <Spinner fx:id="agreedWorktimeSpinner" editable="true" layoutX="597.0" layoutY="48.0" prefHeight="25.0" prefWidth="132.0" />
    </children>
 </AnchorPane>

@@ -6,10 +6,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import main.model.GUIModel;
 import main.view.components.TimeSpinner;
@@ -46,7 +43,7 @@ public class DefaultGUIController implements GUIController {
     private TextField organisationField;
 
     @FXML
-    private TextField worktimeField;
+    private Spinner<Integer> agreedWorktimeSpinner;
 
     @FXML
     private TextField wageField;
@@ -55,7 +52,7 @@ public class DefaultGUIController implements GUIController {
     private TextField currentWorktimeField;
 
     @FXML
-    private TextField carryInField;
+    private Spinner<Integer> carryInSpinner;
 
     @FXML
     private TextField carryOutField;
@@ -91,7 +88,7 @@ public class DefaultGUIController implements GUIController {
                 "name: %s, " +
                 "id: %s, " +
                 "organisation: %s, " +
-                "workTime: %s, " +
+                "workTime: %d, " +
                 "wage: %e, " +
                 "ub: %b, " +
                 "gf: %b, " +
@@ -105,15 +102,13 @@ public class DefaultGUIController implements GUIController {
                 nameField.getCharacters().toString(),
                 idField.getCharacters().toString(),
                 organisationField.getCharacters().toString(),
-                Integer.parseInt(worktimeField.getCharacters().toString().equals("") ?
-                        "-1" : worktimeField.getCharacters().toString()),
+                agreedWorktimeSpinner.getValue(),
                 Float.parseFloat(wageField.getCharacters().toString().equals("") ?
                         "-1" : wageField.getCharacters().toString()),
                 ubCheck.isSelected(),
                 gfCheck.isSelected(),
                 yearMonthPicker.getValue(),
-                Integer.parseInt(carryInField.getCharacters().toString().equals("") ?
-                        "-1" : carryInField.getCharacters().toString()),
+                carryInSpinner.getValue(),
                 Integer.parseInt(carryOutField.getCharacters().toString().equals("") ?
                         "-1" : carryOutField.getCharacters().toString()),
                 saveCheck.isSelected(),
@@ -160,11 +155,30 @@ public class DefaultGUIController implements GUIController {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Bindings.bindContent(workSliceBox.getChildren(), model.getWorkSliceList());
         model.subscribe(this);
+        this.agreedWorktimeSpinner.setValueFactory(getNewSimpleSpinnerFactory());
+        this.carryInSpinner.setValueFactory(getNewSimpleSpinnerFactory());
     }
 
     @Override
     public void update() {
         this.currentTotalWorkTime = model.getTotalWorkTime();
         this.currentWorktimeField.setText(model.formatTime(currentTotalWorkTime));
+    }
+
+    private SpinnerValueFactory<Integer> getNewSimpleSpinnerFactory() {
+        return new SpinnerValueFactory<Integer>() {
+            int value = 0;
+            {
+                setValue(value);
+            }
+            @Override
+            public void decrement(int i) {
+                if (value != 0) setValue(--value);
+            }
+            @Override
+            public void increment(int i) {
+                setValue(++value);
+            }
+        };
     }
 }
