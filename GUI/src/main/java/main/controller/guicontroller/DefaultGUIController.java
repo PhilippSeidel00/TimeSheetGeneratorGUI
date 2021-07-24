@@ -1,5 +1,6 @@
 package main.controller.guicontroller;
 
+import data.*;
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -9,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import main.model.GUIModel;
+import main.view.components.MoneySpinner;
 import main.view.components.TimeSpinner;
 import se.alipsa.ymp.YearMonthPickerCombo;
 
@@ -29,6 +31,7 @@ public class DefaultGUIController implements GUIController {
     private final GUIModel model;
 
     private double currentTotalWorkTime;
+    private double currentPredTransfer;
 
     @FXML
     private TextField surnameField;
@@ -46,7 +49,7 @@ public class DefaultGUIController implements GUIController {
     private Spinner<Integer> agreedWorktimeSpinner;
 
     @FXML
-    private TextField wageField;
+    private MoneySpinner wageSpinner;
 
     @FXML
     private TextField currentWorktimeField;
@@ -76,6 +79,7 @@ public class DefaultGUIController implements GUIController {
     public DefaultGUIController(GUIModel model) throws FileNotFoundException {
         this.model = model;
         this.currentTotalWorkTime = model.getTotalWorkTime();
+        this.currentPredTransfer = 0;
     }
 
     /**
@@ -89,7 +93,7 @@ public class DefaultGUIController implements GUIController {
                 "id: %s, " +
                 "organisation: %s, " +
                 "workTime: %d, " +
-                "wage: %e, " +
+                "wage: %d, " +
                 "ub: %b, " +
                 "gf: %b, " +
                         "YearMonth: %s, " +
@@ -103,21 +107,20 @@ public class DefaultGUIController implements GUIController {
                 idField.getCharacters().toString(),
                 organisationField.getCharacters().toString(),
                 agreedWorktimeSpinner.getValue(),
-                Float.parseFloat(wageField.getCharacters().toString().equals("") ?
-                        "-1" : wageField.getCharacters().toString()),
+                wageSpinner.getBalance(),
                 ubCheck.isSelected(),
                 gfCheck.isSelected(),
                 yearMonthPicker.getValue(),
                 carryInSpinner.getValue(),
                 Integer.parseInt(carryOutField.getCharacters().toString().equals("") ?
-                        "-1" : carryOutField.getCharacters().toString()),
+                        "0" : carryOutField.getCharacters().toString()),
                 saveCheck.isSelected(),
                 currentTotalWorkTime);
         //print data in workslices
         if (model.getWorkSliceControllers().isEmpty()) {
             System.out.println("no workslices found.");
         } else {
-            model.getWorkSliceControllers().forEach(c -> {
+            model.getWorkSliceControllers().forEach(c ->
                 System.out.printf("occupation: %s, " +
                                 "date: %s, " +
                                 "start: %s, " +
@@ -133,8 +136,8 @@ public class DefaultGUIController implements GUIController {
                         c.getPause(),
                         c.isVacation(),
                         c.getWorkTime(),
-                        c.isValid());
-            });
+                        c.isValid())
+            );
         }
 
     }
@@ -151,6 +154,13 @@ public class DefaultGUIController implements GUIController {
         }
     }
 
+    /**
+     * called when user chooses to export the file to TeX format
+     */
+    public void exportToTeX() {
+        System.out.println("exporting...");
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Bindings.bindContent(workSliceBox.getChildren(), model.getWorkSliceList());
@@ -163,10 +173,13 @@ public class DefaultGUIController implements GUIController {
     public void update() {
         this.currentTotalWorkTime = model.getTotalWorkTime();
         this.currentWorktimeField.setText(model.formatTime(currentTotalWorkTime));
+        this.currentPredTransfer = agreedWorktimeSpinner.getValue() - currentTotalWorkTime;
+        if (currentPredTransfer < 0) currentPredTransfer = 0;
+        this.carryOutField.setText(model.formatTime(this.currentPredTransfer));
     }
 
     private SpinnerValueFactory<Integer> getNewSimpleSpinnerFactory() {
-        return new SpinnerValueFactory<Integer>() {
+        return new SpinnerValueFactory<>() {
             int value = 0;
             {
                 setValue(value);
@@ -180,5 +193,28 @@ public class DefaultGUIController implements GUIController {
                 setValue(++value);
             }
         };
+    }
+
+    private TimeSheet constructTimeSheet() throws IllegalArgumentException {
+        var employee = new Employee(nameField.getCharacters().toString(), Integer.parseInt(idField.getCharacters().toString()));
+
+        var workingArea = WorkingArea.parse((ubCheck.isSelected() || gfCheck.isSelected()) ?
+                ((ubCheck.isSelected()) ? "ub" : "gf") : "");
+
+        var profession = new Profession(organisationField.getCharacters().toString(),
+                workingArea,
+                new TimeSpan(agreedWorktimeSpinner.getValue(), 0),
+                ( (double) wageSpinner.getBalance()) / 100d);
+
+        var predTransfer = new TimeSpan(carryInSpinner.getValue(), 0); //TODO: change spinnertype so that fractions can be carried in
+
+        var succTransfer = new TimeSpan((int) Math.floor(currentPredTransfer), (int) ((currentPredTransfer % 1) * 60));
+
+        return new TimeSheet(employee, profession, yearMonthPicker.getValue(), constructEntries(), succTransfer, predTransfer);
+    }
+
+    private Entry[] constructEntries() {
+        //TODO: implement
+        return null;
     }
 }

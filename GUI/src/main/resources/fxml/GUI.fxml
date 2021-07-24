@@ -22,7 +22,10 @@
         <menus>
           <Menu mnemonicParsing="false" text="%fileText">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#addWorkSlice" text="Close" />
+                <Menu mnemonicParsing="false" text="%exportText">
+                    <MenuItem mnemonicParsing="false" onAction="#exportToTeX" text="%texExportText" />
+                    <MenuItem mnemonicParsing="false" text="%pdfExportText" />
+                </Menu>
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="%languageText">

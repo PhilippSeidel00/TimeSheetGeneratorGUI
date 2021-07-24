@@ -70,7 +70,7 @@ public class MoneySpinner extends Spinner<String> {
     public MoneySpinner() {
         setEditable(true);
 
-        TextFormatter<LocalTime> textFormatter = new TextFormatter<LocalTime>(c -> {
+        TextFormatter<LocalTime> textFormatter = new TextFormatter<>(c -> {
             String newText = c.getControlNewText();
             if (newText.matches("[0-9]*.[0-9]{0,2}€")) {
                 return c ;
@@ -78,7 +78,7 @@ public class MoneySpinner extends Spinner<String> {
             return null ;
         });
 
-        SpinnerValueFactory<String> valueFactory = new SpinnerValueFactory<String>() {
+        SpinnerValueFactory<String> valueFactory = new SpinnerValueFactory<>() {
 
 
             {
@@ -87,17 +87,13 @@ public class MoneySpinner extends Spinner<String> {
 
             @Override
             public void decrement(int steps) {
-                var newBalance = mode.get().decrement(intFromValue(), steps);
+                var newBalance = mode.get().decrement(getBalance(), steps);
                 setValue(formatBalance(Math.max(newBalance, 0)));
             }
 
             @Override
             public void increment(int steps) {
-                setValue(formatBalance(mode.get().increment(intFromValue(), steps)));
-            }
-
-            private int intFromValue() {
-                return Integer.parseInt(getValue().replace(".", "").replace("€", ""));
+                setValue(formatBalance(mode.get().increment(getBalance(), steps)));
             }
 
         };
@@ -116,6 +112,14 @@ public class MoneySpinner extends Spinner<String> {
         });
 
         mode.addListener((obs, oldMode, newMode) -> newMode.select(this));
+    }
+
+    /**
+     * get current balance in cents
+     * @return the current balance
+     */
+    public final int getBalance() {
+        return Integer.parseInt(getValue().replace(".", "").replace("€", ""));
     }
 
     private static String formatBalance(int balance) {
