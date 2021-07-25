@@ -1,23 +1,25 @@
 package main.controller.guicontroller;
 
+import checker.CheckerError;
+import checker.CheckerException;
+import checker.CheckerReturn;
+import checker.MiLoGChecker;
 import data.*;
-import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+import main.controller.workslicecontroller.WorksliceController;
 import main.model.GUIModel;
+import main.strategy.FileBuildingStrategy;
+import main.strategy.TeXSaveStrategy;
 import main.view.components.MoneySpinner;
-import main.view.components.TimeSpinner;
 import se.alipsa.ymp.YearMonthPickerCombo;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.*;
 
 
 /**
@@ -158,7 +160,7 @@ public class DefaultGUIController implements GUIController {
      * called when user chooses to export the file to TeX format
      */
     public void exportToTeX() {
-        System.out.println("exporting...");
+        export(new TeXSaveStrategy());
     }
 
     @Override
@@ -195,11 +197,21 @@ public class DefaultGUIController implements GUIController {
         };
     }
 
-    private TimeSheet constructTimeSheet() throws IllegalArgumentException {
-        var employee = new Employee(nameField.getCharacters().toString(), Integer.parseInt(idField.getCharacters().toString()));
+    private void export(FileBuildingStrategy strategy) {
+        try {
+            var timeSheet = constructTimeSheet();
+            if (!checkTimeSheet(timeSheet)) return;
+            var file = strategy.buildFile(timeSheet);
+        } catch (IllegalArgumentException | IOException e) {
+            alert(e.getMessage(), Alert.AlertType.ERROR);
+        }
+    }
 
-        var workingArea = WorkingArea.parse((ubCheck.isSelected() || gfCheck.isSelected()) ?
-                ((ubCheck.isSelected()) ? "ub" : "gf") : "");
+    private TimeSheet constructTimeSheet() throws IllegalArgumentException {
+        var employee = new Employee(nameField.getCharacters().toString(), getID());
+
+        if (!ubCheck.isSelected() && !gfCheck.isSelected()) throw new IllegalArgumentException("Please choose a workingArea");
+        var workingArea = WorkingArea.parse((ubCheck.isSelected()) ? "ub" : "gf");
 
         var profession = new Profession(organisationField.getCharacters().toString(),
                 workingArea,
@@ -213,8 +225,50 @@ public class DefaultGUIController implements GUIController {
         return new TimeSheet(employee, profession, yearMonthPicker.getValue(), constructEntries(), succTransfer, predTransfer);
     }
 
+    private int getID() {
+        int id = 0;
+        try {
+            id = Integer.parseInt(idField.getCharacters().toString());
+        } catch (NumberFormatException ignored){
+        }
+        return id;
+    }
+
     private Entry[] constructEntries() {
-        //TODO: implement
-        return null;
+        var entries = new ArrayList<Entry>();
+        var controllers = new ArrayList<>(model.getWorkSliceControllers());
+        controllers.sort(Comparator.comparing(WorksliceController::getDate));
+        controllers.forEach(c -> entries.add(constructEntry(c)));
+        return entries.toArray(new Entry[0]);
+    }
+
+    private static Entry constructEntry(WorksliceController controller) {
+        var start = new TimeSpan(controller.getStart().getHour(), controller.getStart().getMinute());
+        var end = new TimeSpan(controller.getEnd().getHour(), controller.getEnd().getMinute());
+        var pauseTime = (controller.getPause() < 0) ? 0f : controller.getPause();
+        var pause = new TimeSpan((int)(Math.floor(pauseTime)), (int)((pauseTime % 1) * 60)); //TODO: change pause input to spinner
+        return new Entry(controller.getOccupation(), controller.getDate(), start, end, pause, controller.isVacation());
+    }
+
+    private static boolean checkTimeSheet(TimeSheet timeSheet) {
+        var checker = new MiLoGChecker(timeSheet);
+        CheckerReturn checkerReturn = CheckerReturn.INVALID;
+        try {
+            checkerReturn = checker.check();
+            if (checkerReturn == CheckerReturn.INVALID) buildAlerts(checker.getErrors());
+        } catch (CheckerException e) {
+            e.printStackTrace();
+        }
+        return checkerReturn == CheckerReturn.VALID;
+    }
+
+    private static void buildAlerts(Collection<CheckerError> errors) {
+        errors.forEach(e -> alert(e.getErrorMessage(), Alert.AlertType.ERROR));
+    }
+
+    private static void alert(String message, Alert.AlertType alertType) {
+        var alert = new Alert(alertType);
+        alert.setContentText(message);
+        alert.show();
     }
 }
