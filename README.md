@@ -5,7 +5,7 @@ The original TimeSheetGenerator offers a simple console based UI. This applicati
 increase usability by providing a suitable GUI while also adding some handy features.
 
 ## Project State
-Usability has been achieved. Time sheets can be generated, and most errors are caught. <br>
+Usability has been achieved. Time sheets can be generated. <br>
 No additional features have been added to the original application as of yet.
 
 ## Future Development
