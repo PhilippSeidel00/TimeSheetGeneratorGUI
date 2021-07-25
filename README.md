@@ -5,7 +5,7 @@ The original TimeSheetGenerator offers a simple console based UI. This applicati
 increase usability by providing a suitable GUI while also adding some handy features.
 
 ## Project State
-Usability has been achieved. Timesheets can be generated, and most errors are caught. <br>
+Usability has been achieved. Time sheets can be generated, and most errors are caught. <br>
 No additional features have been added to the original application as of yet.
 
 ## Future Development
@@ -15,7 +15,7 @@ as often as possible.
 New Features will include:
 - [ ] Export to pdf format
 - [ ] Saving of static userdata, like names and departments
-- [ ] Saving of Timesheets as editable files for later use
+- [ ] Saving of time sheets as editable files for later use
 - [ ] Language selection at runtime
 - [ ] Dynamic coloring of faulty WorkSlices
     
